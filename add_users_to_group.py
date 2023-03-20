@@ -2,6 +2,8 @@ import globus_sdk
 from globus_sdk import GroupsClient, AuthClient
 import toml
 from utils import create_authorizer
+import sys
+
 globus_config = toml.load("globus_config.toml")
 CLIENT_ID = globus_config["CLIENT_ID"]
 
@@ -21,7 +23,7 @@ group = [g for g in groups if g["name"] == globus_config["GROUP_NAME"]][0]
 
 import pandas as pd
 
-users = pd.read_csv("users.csv")
+users = pd.read_csv(sys.argv[1])
 
 chunk_size = 50
 for i in range(0, len(users), chunk_size):
