@@ -25,9 +25,11 @@ import pandas as pd
 
 users = pd.read_csv(sys.argv[1])
 
+field = "Login Address"
+field = "Email Address"
 chunk_size = 50
 for i in range(0, len(users), chunk_size):
-    emails = list(users["Email Address"][i:i+chunk_size])
+    emails = list(users[field][i : i + chunk_size])
     identities = ac.get_identities(usernames=emails)
-    ids = [{"identity_id":each["id"]} for each in identities["identities"]]
+    ids = [{"identity_id": each["id"]} for each in identities["identities"]]
     gc.batch_membership_action(group["id"], actions={"add": ids})
